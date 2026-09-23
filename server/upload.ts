@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 export async function handleUpload(

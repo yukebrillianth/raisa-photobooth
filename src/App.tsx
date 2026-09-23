@@ -216,7 +216,7 @@ export default function App() {
       <main className="relative flex flex-1 flex-col items-center justify-between overflow-hidden px-6 py-4 sm:px-8">
         {/* Stage 1: Preview & Countdown */}
         {(stage === "preview" || stage === "countdown") && (
-          <div className="flex h-full w-full max-w-4xl flex-col items-center justify-between">
+          <div className="flex min-h-fit gap-12 my-auto w-full max-w-4xl flex-col items-center justify-between">
             {/* Overlay Toggle Switcher */}
             <div className="flex items-center gap-2 mb-2">
               <span className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-text-secondary)]">
