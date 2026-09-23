@@ -1,8 +1,8 @@
+import dotenv from "dotenv";
 import fs from "node:fs";
+import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import http from "node:http";
-import dotenv from "dotenv";
 import { handleUpload } from "./upload";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -41,16 +41,13 @@ const server = http.createServer(async (req, res) => {
         console.log("Menerima request upload foto...");
         const data = JSON.parse(body);
         const rawBase64 = data.raw.replace(/^data:image\/\w+;base64,/, "");
-        const overlayBase64 = data.overlay.replace(
-          /^data:image\/\w+;base64,/,
-          "",
-        );
+        const overlayBase64 = data.overlay.replace(/^data:image\/\w+;base64,/, "");
 
         const rawBuffer = Buffer.from(rawBase64, "base64");
         const overlayBuffer = Buffer.from(overlayBase64, "base64");
 
         const result = await handleUpload(rawBuffer, overlayBuffer);
-        console.log("Upload ke R2 sukses:", result.overlayDownloadUrl);
+        console.log("Upload ke R2 sukses:", result.overlayDownloadUrl, result.rawDownloadUrl);
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify(result));
       } catch (err: unknown) {
