@@ -25,12 +25,10 @@ export function ResultView({
   const currentUrl = isOverlay
     ? uploadResult?.overlayDownloadUrl || captured.overlayUrl
     : uploadResult?.rawDownloadUrl || captured.rawUrl;
-  const currentFileName = isOverlay
-    ? "raisa_photobooth_frame.jpg"
-    : "raisa_photobooth_raw.jpg";
+  const currentFileName = isOverlay ? "raisa_photobooth_frame.jpg" : "raisa_photobooth_raw.jpg";
 
   return (
-    <div className="flex w-full max-w-xl flex-col items-center gap-5 py-2">
+    <div className="flex w-full max-w-full flex-col items-center gap-5 py-2">
       {/* Section Header */}
       <div className="w-full text-center border-b border-[var(--color-surface-3)] pb-3">
         <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-[var(--color-text-secondary)]">
@@ -97,9 +95,7 @@ export function ResultView({
         </div>
 
         <p className="font-mono text-xs text-[var(--color-text-muted)]">
-          {isOverlay
-            ? "1920 × 1080 • JPEG • Frame ITS"
-            : "1920 × 1080 • JPEG • Raw 16:9"}
+          {isOverlay ? "1920 × 1080 • JPEG • Frame ITS" : "1920 × 1080 • JPEG • Raw 16:9"}
         </p>
 
         {uploadResult && (

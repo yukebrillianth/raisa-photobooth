@@ -216,7 +216,7 @@ export default function App() {
       <main className="relative flex flex-1 flex-col items-center justify-center overflow-y-auto px-6 py-6 sm:px-10">
         {/* Stage 1: Preview & Countdown */}
         {(stage === "preview" || stage === "countdown") && (
-          <div className="flex w-full max-w-xl flex-col items-center gap-6">
+          <div className="flex w-full max-w-full flex-col items-center gap-6">
             {/* Overlay Toggle Switcher */}
             <div className="flex items-center gap-3">
               <span className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-text-secondary)]">
@@ -249,7 +249,7 @@ export default function App() {
             </div>
 
             {/* Viewfinder Frame (16:9 container) */}
-            <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border-2 border-[var(--color-surface-3)] bg-black shadow-[var(--shadow-elevated)]">
+            <div className="relative flex aspect-video max-w-full w-full items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border-2 border-[var(--color-surface-3)] bg-black shadow-[var(--shadow-elevated)]">
               {showOverlay ? (
                 <>
                   {/* Camera stream positioned at 1280x720 centered behind 1920x1080 (320, 180) */}
@@ -326,7 +326,7 @@ export default function App() {
 
         {/* Stage 3: Review */}
         {stage === "review" && captured && (
-          <div className="flex w-full max-w-xl flex-col items-center gap-6 py-2">
+          <div className="flex w-full max-w-full flex-col items-center gap-6 py-2">
             <div className="w-full text-center">
               <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-[var(--color-text-secondary)]">
                 Pratinjau Hasil
@@ -363,7 +363,7 @@ export default function App() {
             </div>
 
             {/* Photo preview container: 16:9 container taking full width of max-w-xl */}
-            <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border-2 border-[var(--color-surface-3)] bg-white p-2 shadow-[var(--shadow-elevated)]">
+            <div className="relative flex aspect-video max-w-full w-full items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border-2 border-[var(--color-surface-3)] bg-white p-2 shadow-[var(--shadow-elevated)]">
               <img
                 src={activePreview === "overlay" ? captured.overlayUrl : captured.rawUrl}
                 alt="Hasil Jepretan"
