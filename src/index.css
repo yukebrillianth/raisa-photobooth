@@ -1,0 +1,216 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   RAISA Design System - Light ITS Portrait Kiosk
+   ITS branding: Biru #007BC0, Biru Cover #243E80, Hitam #2D2C2F
+   Font: Friz Quadrata Std for display only
+   ───────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: "Friz Quadrata Std";
+  src: url("/fonts/its.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ── Colors - ITS Light Brand ──────────────────────── */
+  --color-its-blue: #007bc0;
+  --color-its-cover: #243e80;
+  --color-its-black: #2d2c2f;
+
+  --color-surface-0: #ffffff; /* putih cemerlang - background */
+  --color-surface-1: #f8f9fa; /* slightly darker - cards */
+  --color-surface-2: #e9ecef; /* elevated */
+  --color-surface-3: #dee2e6; /* borders */
+
+  --color-primary: #007bc0; /* Biru ITS */
+  --color-primary-dark: #005a8c;
+  --color-primary-light: #4da3d9;
+
+  --color-secondary: #243e80; /* Biru Cover */
+  --color-secondary-dark: #1a2d5e;
+
+  --color-accent: #e8f4fb; /* Soft blue highlight */
+
+  --color-text-primary: #2d2c2f; /* hitam legam */
+  --color-text-secondary: #555553;
+  --color-text-muted: #888886;
+
+  --color-success: #4caf50;
+  --color-warning: #ff9800;
+  --color-danger: #f44336;
+  --color-info: #03a9f4;
+
+  /* ── Typography ─────────────────────────────────────── */
+  --font-display: "Friz Quadrata Std", Georgia, "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, monospace;
+
+  --text-h1: 1.875rem; /* 30px - display */
+  --text-h2: 1.5rem; /* 24px */
+  --text-status: 1.5rem; /* 24px - meets spec */
+  --text-transcript: 1.875rem; /* 30px - large for kiosk robot */
+  --text-transcript-label: 1.5rem; /* 24px - RAISA label */
+  --text-transcript-time: 1rem; /* 16px - timestamp */
+  --text-button: 1rem; /* 16px */
+  --text-caption: 0.75rem; /* 12px */
+
+  /* ── Spacing (4px grid) ─────────────────────────────── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* ── Borders ────────────────────────────────────────── */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* ── Shadows ────────────────────────────────────────── */
+  --shadow-soft: 0 2px 10px rgba(45, 44, 47, 0.08);
+  --shadow-elevated: 0 12px 28px rgba(45, 44, 47, 0.12);
+  --shadow-primary: 0 0 28px rgba(0, 123, 192, 0.1);
+  --shadow-secondary: 0 10px 24px rgba(36, 62, 128, 0.08);
+
+  /* ── Transitions ────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+
+  /* ── Kiosk ──────────────────────────────────────────── */
+  --mic-size: 140px;
+  --touch-min: 48px;
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-surface-0);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+  }
+
+  /* Portrait-first kiosk container */
+  #root {
+    min-height: 100dvh;
+    width: 100%;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+/* ── Keyframes ────────────────────────────────────────── */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseRing {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-primary) 50%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 28px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes bounceSlow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes thinkingDot {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
