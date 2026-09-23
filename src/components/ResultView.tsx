@@ -168,7 +168,7 @@ export function ResultView({
             background:
               "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)",
             borderColor: "var(--color-primary-dark)",
-            boxShadow: "0 4px 24px rgba(0,123,192,0.35)",
+            boxShadow: "0 4px 24px rgba(0,123,192,0.15)",
           }}
         >
           <span className="font-display text-base font-semibold tracking-[0.2em] text-white">

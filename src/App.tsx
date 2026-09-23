@@ -222,11 +222,11 @@ export default function App() {
               <span className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-text-secondary)]">
                 Pratinjau:
               </span>
-              <div className="flex rounded-[var(--radius-md)] border border-[var(--color-surface-3)] bg-white p-0.5 text-xs">
+              <div className="flex rounded border border-[var(--color-surface-3)] bg-white p-0.5 text-xs">
                 <button
                   type="button"
                   onClick={() => setShowOverlay(true)}
-                  className={`rounded px-3 py-1 font-display font-semibold tracking-wider transition-colors ${
+                  className={`rounded px-3 py-3 font-display font-semibold tracking-wider transition-colors ${
                     showOverlay
                       ? "bg-[var(--color-primary)] text-white"
                       : "text-[var(--color-text-secondary)] hover:text-black"
@@ -237,7 +237,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setShowOverlay(false)}
-                  className={`rounded px-3 py-1 font-display font-semibold tracking-wider transition-colors ${
+                  className={`rounded px-3 py-3 font-display font-semibold tracking-wider transition-colors ${
                     !showOverlay
                       ? "bg-[var(--color-primary)] text-white"
                       : "text-[var(--color-text-secondary)] hover:text-black"
