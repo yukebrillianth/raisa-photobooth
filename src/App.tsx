@@ -212,23 +212,23 @@ export default function App() {
       {/* Navbar with only border, NO shadow */}
       <StatusBar status={currentStatus} />
 
-      {/* Main Kiosk Body */}
-      <main className="relative flex flex-1 flex-col items-center justify-between overflow-hidden px-6 py-4 sm:px-8">
+      {/* Main Kiosk Body - Centered vertically for portrait display */}
+      <main className="relative flex flex-1 flex-col items-center justify-center overflow-y-auto px-6 py-6 sm:px-10">
         {/* Stage 1: Preview & Countdown */}
         {(stage === "preview" || stage === "countdown") && (
-          <div className="flex min-h-fit gap-12 my-auto w-full max-w-4xl flex-col items-center justify-between">
+          <div className="flex w-full max-w-xl flex-col items-center gap-6">
             {/* Overlay Toggle Switcher */}
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-3">
               <span className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-text-secondary)]">
-                Pratinjau:
+                Tampilan:
               </span>
-              <div className="flex rounded border border-[var(--color-surface-3)] bg-white p-0.5 text-xs">
+              <div className="flex rounded-[var(--radius-lg)] border border-[var(--color-surface-3)] bg-white p-1 shadow-sm text-xs">
                 <button
                   type="button"
                   onClick={() => setShowOverlay(true)}
-                  className={`rounded px-3 py-3 font-display font-semibold tracking-wider transition-colors ${
+                  className={`rounded-md px-4 py-2 font-display font-semibold tracking-wider transition-colors ${
                     showOverlay
-                      ? "bg-[var(--color-primary)] text-white"
+                      ? "bg-[var(--color-primary)] text-white shadow-sm"
                       : "text-[var(--color-text-secondary)] hover:text-black"
                   }`}
                 >
@@ -237,9 +237,9 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setShowOverlay(false)}
-                  className={`rounded px-3 py-3 font-display font-semibold tracking-wider transition-colors ${
+                  className={`rounded-md px-4 py-2 font-display font-semibold tracking-wider transition-colors ${
                     !showOverlay
-                      ? "bg-[var(--color-primary)] text-white"
+                      ? "bg-[var(--color-primary)] text-white shadow-sm"
                       : "text-[var(--color-text-secondary)] hover:text-black"
                   }`}
                 >
@@ -249,7 +249,7 @@ export default function App() {
             </div>
 
             {/* Viewfinder Frame (16:9 container) */}
-            <div className="relative flex aspect-video w-full max-w-4xl items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-surface-3)] bg-black shadow-[var(--shadow-soft)]">
+            <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border-2 border-[var(--color-surface-3)] bg-black shadow-[var(--shadow-elevated)]">
               {showOverlay ? (
                 <>
                   {/* Camera stream positioned at 1280x720 centered behind 1920x1080 (320, 180) */}
@@ -294,8 +294,8 @@ export default function App() {
 
               {/* Central countdown indicator in viewfinder */}
               {stage === "countdown" && (
-                <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/35 backdrop-blur-[1px]">
-                  <span className="font-display text-8xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.5)]">
+                <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-[2px]">
+                  <span className="font-display text-9xl font-bold text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.7)] animate-bounceSlow">
                     {countdown}
                   </span>
                 </div>
@@ -303,12 +303,14 @@ export default function App() {
             </div>
 
             {/* Bottom Capture Button (matches raisa-chat MicButton 140px gradient circle) */}
-            <CaptureButton
-              countdown={countdown}
-              isCounting={stage === "countdown"}
-              disabled={streamError}
-              onPress={startCountdown}
-            />
+            <div className="pt-2">
+              <CaptureButton
+                countdown={countdown}
+                isCounting={stage === "countdown"}
+                disabled={streamError}
+                onPress={startCountdown}
+              />
+            </div>
           </div>
         )}
 
@@ -324,24 +326,24 @@ export default function App() {
 
         {/* Stage 3: Review */}
         {stage === "review" && captured && (
-          <div className="flex h-full w-full max-w-3xl flex-col items-center justify-between py-2">
-            <div className="w-full text-center border-b border-[var(--color-surface-3)] pb-2">
+          <div className="flex w-full max-w-xl flex-col items-center gap-6 py-2">
+            <div className="w-full text-center">
               <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-[var(--color-text-secondary)]">
                 Pratinjau Hasil
               </p>
-              <h2 className="mt-1 font-display text-xl font-bold tracking-tight text-[var(--color-primary)]">
+              <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold tracking-tight text-[var(--color-primary)]">
                 Tinjau Foto Anda
               </h2>
             </div>
 
             {/* Toggle Preview: Overlay vs Raw */}
-            <div className="my-2 flex rounded-[var(--radius-md)] border border-[var(--color-surface-3)] bg-[var(--color-surface-1)] p-1 text-xs">
+            <div className="flex rounded-[var(--radius-lg)] border border-[var(--color-surface-3)] bg-white p-1 shadow-sm text-xs sm:text-sm">
               <button
                 type="button"
                 onClick={() => setActivePreview("overlay")}
-                className={`rounded-md px-4 py-2 font-display font-semibold tracking-wider transition-colors ${
+                className={`rounded-md px-5 py-2 font-display font-semibold tracking-wider transition-colors ${
                   activePreview === "overlay"
-                    ? "border border-[var(--color-surface-3)] bg-white text-[var(--color-primary)] shadow-[var(--shadow-soft)]"
+                    ? "bg-[var(--color-primary)] text-white shadow-sm"
                     : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
                 }`}
               >
@@ -350,9 +352,9 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setActivePreview("raw")}
-                className={`rounded-md px-4 py-2 font-display font-semibold tracking-wider transition-colors ${
+                className={`rounded-md px-5 py-2 font-display font-semibold tracking-wider transition-colors ${
                   activePreview === "raw"
-                    ? "border border-[var(--color-surface-3)] bg-white text-[var(--color-primary)] shadow-[var(--shadow-soft)]"
+                    ? "bg-[var(--color-primary)] text-white shadow-sm"
                     : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
                 }`}
               >
@@ -360,32 +362,32 @@ export default function App() {
               </button>
             </div>
 
-            {/* Photo preview container: 16:9 container */}
-            <div className="relative flex aspect-video max-h-[52dvh] w-full items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-surface-3)] bg-white p-2 shadow-[var(--shadow-soft)]">
+            {/* Photo preview container: 16:9 container taking full width of max-w-xl */}
+            <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border-2 border-[var(--color-surface-3)] bg-white p-2 shadow-[var(--shadow-elevated)]">
               <img
                 src={activePreview === "overlay" ? captured.overlayUrl : captured.rawUrl}
                 alt="Hasil Jepretan"
-                className="h-full w-full rounded object-contain"
+                className="h-full w-full rounded-lg object-contain"
               />
             </div>
 
-            {/* Action buttons matching OperatorPanel style */}
-            <div className="mt-4 flex w-full max-w-md items-center justify-center gap-4 pb-2">
+            {/* Action buttons: Big touchable buttons for kiosk */}
+            <div className="flex w-full items-center justify-center gap-4 pt-2">
               <button
                 type="button"
                 onClick={handleReset}
-                className="flex min-h-[var(--touch-min)] flex-1 items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-surface-3)] bg-white px-4 py-3 font-display text-sm font-semibold tracking-wider uppercase text-[var(--color-text-primary)] transition-colors hover:border-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 active:scale-98"
+                className="flex min-h-[58px] flex-1 items-center justify-center rounded-[var(--radius-lg)] border-2 border-[var(--color-surface-3)] bg-white px-6 font-display text-sm sm:text-base font-bold tracking-wider uppercase text-[var(--color-text-primary)] shadow-sm transition-all hover:bg-[var(--color-surface-1)] active:scale-95"
               >
                 Foto Ulang
               </button>
               <button
                 type="button"
                 onClick={handleProceedToResult}
-                className="flex min-h-[var(--touch-min)] flex-1 items-center justify-center rounded-[var(--radius-md)] border-2 border-[var(--color-primary-dark)] px-4 py-3 font-display text-sm font-semibold tracking-wider uppercase text-white transition-all hover:scale-[1.02] active:scale-98"
+                className="flex min-h-[58px] flex-1 items-center justify-center rounded-[var(--radius-lg)] border-2 border-[var(--color-primary-dark)] px-6 font-display text-sm sm:text-base font-bold tracking-wider uppercase text-white shadow-md transition-all active:scale-95"
                 style={{
                   background:
                     "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)",
-                  boxShadow: "0 4px 20px rgba(0,123,192,0.3)",
+                  boxShadow: "0 4px 20px rgba(0,123,192,0.35)",
                 }}
               >
                 Simpan & Buat QR

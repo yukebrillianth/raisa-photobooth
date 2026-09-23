@@ -1,5 +1,17 @@
-import "dotenv/config";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import dotenv from "dotenv";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+
+// Resolve .env relative to project root regardless of cwd
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const envPath = path.resolve(__dirname, "../.env");
+if (fs.existsSync(envPath)) {
+  dotenv.config({ path: envPath });
+} else {
+  dotenv.config();
+}
 
 export async function handleUpload(
   rawBuffer: Buffer,
@@ -18,6 +30,14 @@ export async function handleUpload(
     process.env.S3_PUBLIC_BASE_URL || process.env.VITE_S3_PUBLIC_BASE_URL;
 
   if (!endpoint || !accessKeyId || !secretAccessKey) {
+    console.error("Missing S3 credentials:", {
+      endpoint: !!endpoint,
+      bucket: !!bucket,
+      accessKeyId: !!accessKeyId,
+      secretAccessKey: !!secretAccessKey,
+      envPath,
+      envFileExists: fs.existsSync(envPath),
+    });
     throw new Error(
       "S3 / R2 credentials tidak lengkap. Periksa S3_ENDPOINT, S3_ACCESS_KEY_ID, dan S3_SECRET_ACCESS_KEY di .env",
     );

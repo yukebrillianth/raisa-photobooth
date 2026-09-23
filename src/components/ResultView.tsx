@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import type { CapturedResult, UploadResult } from "../lib/photo";
 
@@ -26,158 +25,113 @@ export function ResultView({
   const currentUrl = isOverlay
     ? uploadResult?.overlayDownloadUrl || captured.overlayUrl
     : uploadResult?.rawDownloadUrl || captured.rawUrl;
-  const currentFileName = isOverlay ? "raisa_photobooth_frame.jpg" : "raisa_photobooth_raw.jpg";
+  const currentFileName = isOverlay
+    ? "raisa_photobooth_frame.jpg"
+    : "raisa_photobooth_raw.jpg";
 
   return (
-    <div className="flex h-full w-full max-w-3xl flex-col justify-between overflow-y-auto py-2">
-      {/* Kiosk Section Header */}
-      <div className="flex items-end justify-between border-b border-[var(--color-surface-3)] pb-3">
-        <div>
-          <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-[var(--color-text-secondary)]">
-            Kenang-kenangan Digital
-          </p>
-          <h2 className="mt-1 font-display text-2xl font-bold tracking-tight text-[var(--color-primary)]">
-            Foto Anda Sudah Siap
-          </h2>
-        </div>
-        <p className="font-mono text-xs text-[var(--color-text-muted)]">
-          {new Date(captured.timestamp).toLocaleTimeString("id-ID", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}{" "}
-          WIB
+    <div className="flex w-full max-w-xl flex-col items-center gap-5 py-2">
+      {/* Section Header */}
+      <div className="w-full text-center border-b border-[var(--color-surface-3)] pb-3">
+        <p className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-[var(--color-text-secondary)]">
+          Kenang-kenangan Digital
+        </p>
+        <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold tracking-tight text-[var(--color-primary)]">
+          Foto Anda Sudah Siap
+        </h2>
+        <p className="mt-1 font-body text-xs sm:text-sm text-[var(--color-text-secondary)]">
+          Pindai kode QR menggunakan kamera HP untuk mengunduh
         </p>
       </div>
 
-      {/* Main Container */}
-      <div className="my-auto flex flex-col gap-6 py-4">
-        {/* Photo + QR Unified Card */}
-        <div className="rounded-[var(--radius-xl)] border border-[var(--color-surface-3)] bg-white p-6 shadow-[var(--shadow-soft)]">
-          {/* Segmented Version Switcher */}
-          <div className="flex items-center justify-between border-b border-[var(--color-surface-3)] pb-4">
-            <div>
-              <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-text-secondary)]">
-                Pilih Versi Unduhan
-              </p>
-              <p className="font-body text-xs text-[var(--color-text-muted)] mt-0.5">
-                {isOverlay
-                  ? "Dilengkapi bingkai kenang-kenangan Robot RAISA ITS"
-                  : "Resolusi penuh 1920 × 1080 langsung dari kamera"}
-              </p>
-            </div>
-
-            <div className="flex rounded-[var(--radius-md)] border border-[var(--color-surface-3)] bg-[var(--color-surface-1)] p-1 text-xs">
-              <button
-                type="button"
-                onClick={() => setActiveTab("overlay")}
-                className={`rounded-md px-4 py-2 font-display font-semibold tracking-wider transition-colors ${
-                  isOverlay
-                    ? "border border-[var(--color-surface-3)] bg-white text-[var(--color-primary)] shadow-[var(--shadow-soft)]"
-                    : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
-                }`}
-              >
-                FRAME ITS
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab("raw")}
-                className={`rounded-md px-4 py-2 font-display font-semibold tracking-wider transition-colors ${
-                  !isOverlay
-                    ? "border border-[var(--color-surface-3)] bg-white text-[var(--color-primary)] shadow-[var(--shadow-soft)]"
-                    : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
-                }`}
-              >
-                FOTO ASLI
-              </button>
-            </div>
-          </div>
-
-          {/* Side-by-side: Photo Preview & QR Code */}
-          <div className="mt-6 grid grid-cols-1 items-center gap-8 md:grid-cols-2">
-            {/* Left: Captured Photo Preview */}
-            <div className="flex flex-col items-center">
-              <div className="relative flex max-h-[340px] w-full items-center justify-center overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-surface-3)] bg-[var(--color-surface-1)] p-2">
-                <img
-                  src={isOverlay ? captured.overlayUrl : captured.rawUrl}
-                  alt={isOverlay ? "Foto Frame ITS" : "Foto Asli"}
-                  className="max-h-[320px] w-auto rounded object-contain"
-                />
-              </div>
-              <p className="font-mono text-xs text-[var(--color-text-muted)] mt-2">
-                {isOverlay ? "1920 × 1080 • JPEG • Frame ITS" : "1920 × 1080 • JPEG • Raw 16:9"}
-              </p>
-            </div>
-
-            {/* Right: QR Code & Instructions */}
-            <div className="flex flex-col items-center justify-center border-t border-[var(--color-surface-3)] pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0">
-              <div className="flex flex-col items-center rounded-[var(--radius-lg)] border border-[var(--color-surface-3)] bg-[var(--color-surface-1)] p-4">
-                {currentQr ? (
-                  <img
-                    src={currentQr}
-                    alt="Kode QR Unduhan"
-                    className="h-56 w-56 rounded-md bg-white p-2 object-contain"
-                  />
-                ) : (
-                  <div className="flex h-56 w-56 items-center justify-center rounded-md bg-white text-xs text-[var(--color-text-muted)] font-mono">
-                    Membuat QR...
-                  </div>
-                )}
-              </div>
-
-              <div className="mt-4 text-center">
-                <p className="font-display text-sm font-semibold text-[var(--color-text-primary)]">
-                  Pindai dengan Kamera HP
-                </p>
-                <p className="font-body text-xs text-[var(--color-text-secondary)] mt-0.5">
-                  Arahkan kamera ke kode QR untuk mengunduh berkas
-                </p>
-              </div>
-
-              {/* <a
-                href={currentUrl}
-                download={currentFileName}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-4 flex min-h-[var(--touch-min)] w-full max-w-xs items-center justify-center gap-2 rounded-[var(--radius-md)] border border-[var(--color-surface-3)] bg-white px-4 py-2 font-display text-xs font-semibold tracking-wider text-[var(--color-primary)] transition-colors hover:border-[var(--color-primary)] hover:bg-[var(--color-primary)]/5"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  className="h-4 w-4"
-                  aria-hidden="true"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 10l5 5 5-5m-5 5V3" />
-                </svg>
-                UNDUH KE PERANGKAT INI
-              </a> */}
-            </div>
-          </div>
-        </div>
+      {/* Segmented Version Switcher */}
+      <div className="flex rounded-[var(--radius-lg)] border border-[var(--color-surface-3)] bg-white p-1 shadow-sm text-xs sm:text-sm">
+        <button
+          type="button"
+          onClick={() => setActiveTab("overlay")}
+          className={`rounded-md px-5 py-2 font-display font-semibold tracking-wider transition-colors ${
+            isOverlay
+              ? "bg-[var(--color-primary)] text-white shadow-sm"
+              : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+          }`}
+        >
+          FRAME ITS (SOUVENIR)
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("raw")}
+          className={`rounded-md px-5 py-2 font-display font-semibold tracking-wider transition-colors ${
+            !isOverlay
+              ? "bg-[var(--color-primary)] text-white shadow-sm"
+              : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+          }`}
+        >
+          FOTO ASLI (RAW 16:9)
+        </button>
       </div>
 
-      {/* Footer Action matching raisa-chat */}
-      <div className="flex flex-col items-center gap-3 border-t border-[var(--color-surface-3)] pt-4">
+      {/* Main Unified Card: Photo Preview & QR Code */}
+      <div className="flex w-full flex-col items-center gap-4 rounded-[var(--radius-xl)] border border-[var(--color-surface-3)] bg-white p-4 sm:p-5 shadow-[var(--shadow-soft)]">
+        {/* Photo thumbnail */}
+        <div className="relative flex aspect-video max-h-[220px] w-full items-center justify-center overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-surface-3)] bg-[var(--color-surface-1)] p-1.5">
+          <img
+            src={isOverlay ? captured.overlayUrl : captured.rawUrl}
+            alt={isOverlay ? "Foto Frame ITS" : "Foto Asli"}
+            className="h-full w-full rounded object-contain"
+          />
+        </div>
+
+        {/* QR Code */}
+        <div className="flex flex-col items-center rounded-[var(--radius-lg)] border border-[var(--color-surface-3)] bg-[var(--color-surface-1)] p-3">
+          {currentQr ? (
+            <img
+              src={currentQr}
+              alt="Kode QR Unduhan"
+              className="h-48 w-48 rounded bg-white p-2 object-contain"
+            />
+          ) : (
+            <div className="flex h-48 w-48 items-center justify-center rounded bg-white text-xs text-[var(--color-text-muted)] font-mono">
+              Membuat QR...
+            </div>
+          )}
+        </div>
+
+        <p className="font-mono text-xs text-[var(--color-text-muted)]">
+          {isOverlay
+            ? "1920 × 1080 • JPEG • Frame ITS"
+            : "1920 × 1080 • JPEG • Raw 16:9"}
+        </p>
+
+        {uploadResult && (
+          <a
+            href={currentUrl}
+            download={currentFileName}
+            target="_blank"
+            rel="noreferrer"
+            className="text-xs font-semibold text-[var(--color-primary)] hover:underline"
+          >
+            Buka tautan unduhan langsung
+          </a>
+        )}
+      </div>
+
+      {/* Footer Action */}
+      <div className="flex w-full flex-col items-center gap-2 pt-1">
         <button
           type="button"
           onClick={onReset}
-          className="group relative flex h-14 w-full max-w-sm items-center justify-center rounded-[var(--radius-lg)] border-2 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+          className="flex min-h-[58px] w-full items-center justify-center rounded-[var(--radius-lg)] border-2 border-[var(--color-primary-dark)] px-6 font-display text-base font-bold tracking-[0.15em] text-white shadow-md transition-all active:scale-95"
           style={{
             background:
               "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)",
-            borderColor: "var(--color-primary-dark)",
-            boxShadow: "0 4px 24px rgba(0,123,192,0.15)",
+            boxShadow: "0 4px 20px rgba(0,123,192,0.35)",
           }}
         >
-          <span className="font-display text-base font-semibold tracking-[0.2em] text-white">
-            SELESAI / FOTO BARU
-          </span>
+          SELESAI / FOTO BARU
         </button>
 
         <p className="font-mono text-xs text-[var(--color-text-muted)]">
-          Kembali ke layar utama otomatis dalam {autoResetTimer}s
+          Layar kembali otomatis dalam {autoResetTimer} detik
         </p>
       </div>
     </div>

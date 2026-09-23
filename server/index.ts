@@ -1,11 +1,18 @@
-import "dotenv/config";
-import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import http from "node:http";
+import dotenv from "dotenv";
 import { handleUpload } from "./upload";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const envPath = path.resolve(__dirname, "../.env");
+if (fs.existsSync(envPath)) {
+  dotenv.config({ path: envPath });
+} else {
+  dotenv.config();
+}
+
 const distDir = path.resolve(__dirname, "../dist");
 const port = Number(process.env.PORT) || 5173;
 
